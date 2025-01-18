@@ -10,14 +10,16 @@ import { GifsService } from '../../../gifs/services/gifs.service';
 })
 export class SidebardComponent {
 
-  // public tagsHistory: string[] = [];
-
   constructor(
     private gifsService: GifsService
   ) {}
 
   get tags(): string[] {
     return this.gifsService.tagsHistory;
+  }
+
+  searchTag(tag: string): void {
+    this.gifsService.searchTag(tag);
   }
 
 }
