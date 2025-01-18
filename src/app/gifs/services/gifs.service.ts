@@ -28,8 +28,14 @@ export class GifsService {
 
     this._tagsHistory.unshift(tag);
     this._tagsHistory = this._tagsHistory.splice(0, 10);
+    this.saveLocalStorage();
 
-    // this._tagsHistory = new Set<string>([tag, ...this._tagsHistory].slice(0,10));   // si deseas trabajarlo como set de string donde las claves no se repiten
+    // si deseas trabajarlo como set de string donde las claves no se repiten
+    // this._tagsHistory = new Set<string>([tag, ...this._tagsHistory].slice(0,10));
+  }
+
+  private saveLocalStorage(): void {
+    localStorage.setItem('history', JSON.stringify(this._tagsHistory));
   }
 
   searchTag(tag: string): void {
