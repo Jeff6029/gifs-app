@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class GifsService {
 
   private _tagsHistory: string[] = [];
+  // private _tagsHistory: Set<string> = new Set<string>();
 
   constructor() { }
 
@@ -13,9 +14,20 @@ export class GifsService {
     return [...this._tagsHistory];
   }
 
-  searchTag(tag: string): void {
+  organizeHistory(tag: string): void {
+    tag = tag.trim().toLowerCase();
+    this._tagsHistory = this._tagsHistory.filter(
+      (oldTag: string) => oldTag !== tag
+    );
+
     this._tagsHistory.unshift(tag);
-    console.log("Desde el servicio -->", this._tagsHistory)
-    // this._tagsHistory = this._tagsHistory.slice(0, 10);
+    this._tagsHistory = this._tagsHistory.splice(0, 10);
+
+    // this._tagsHistory = new Set<string>([tag, ...this._tagsHistory].slice(0,10));   // si deseas trabajarlo como set de string donde las claves no se repiten
+  }
+
+  searchTag(tag: string): void {
+    if(tag.length === 0) return;
+    this.organizeHistory(tag);
   }
 }
